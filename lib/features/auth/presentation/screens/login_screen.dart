@@ -55,6 +55,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     return AuthFormContainer(
       title: 'Welcome Back',
+      bottomWidget: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Don't have an account?"),
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.register);
+            },
+            child: const Text('Register'),
+          ),
+        ],
+      ),
       children: [
         Form(
           key: _formKey,
@@ -105,18 +117,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         ),
       ],
-      bottomWidget: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text("Don't have an account?"),
-          TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.register);
-            },
-            child: const Text('Register'),
-          ),
-        ],
-      ),
     );
   }
 } 

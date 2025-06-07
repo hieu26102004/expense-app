@@ -58,6 +58,18 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     return AuthFormContainer(
       title: 'Create Account',
+      bottomWidget: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Already have an account?"),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Login'),
+          ),
+        ],
+      ),
       children: [
         Form(
           key: _formKey,
@@ -123,18 +135,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ),
         ),
       ],
-      bottomWidget: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text("Already have an account?"),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Login'),
-          ),
-        ],
-      ),
     );
   }
 } 

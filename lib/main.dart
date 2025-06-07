@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'routes.dart';
+import 'core/services/init_service.dart';
+import 'app.dart';
 
-void main() {
-  runApp(
-    const ProviderScope(
-      child: MainApp(),
-    ),
-  );
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Expense App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  try {
+    await InitService.init();
+    runApp(
+      const ProviderScope(
+        child: App(),
       ),
-      initialRoute: AppRoutes.login,
-      onGenerateRoute: AppRoutes.onGenerateRoute,
+    );
+  } catch (e) {
+    print('Error initializing app: $e');
+    runApp(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Text('Error initializing app: $e'),
+          ),
+        ),
+      ),
     );
   }
 }

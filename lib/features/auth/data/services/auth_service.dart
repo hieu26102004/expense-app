@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:fe/core/config/app_config.dart';
+import 'package:fe/core/services/token_service.dart';
 import 'package:http/http.dart' as http;
 import '../models/auth_models.dart';
 
@@ -58,6 +59,9 @@ class AuthService {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final loginResponse = LoginResponse.fromJson(data);
+        
+        await TokenService.saveToken(loginResponse.accessToken);
+        
         return loginResponse.user;
       } else {
         throw data['message'] ?? 'Login failed';
@@ -65,5 +69,9 @@ class AuthService {
     } catch (e) {
       throw 'Failed to connect to server';
     }
+  }
+
+  Future<void> logout() async {
+    await TokenService.removeToken();
   }
 } 
