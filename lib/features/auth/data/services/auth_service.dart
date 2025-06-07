@@ -48,18 +48,11 @@ class AuthService {
       final headers = AppConfig.defaultHeaders;
       final body = jsonEncode(request.toJson());
 
-      print('Login Request URL: $url');
-      print('Login Request Headers: $headers');
-      print('Login Request Body: $body');
-
       final response = await http.post(
         Uri.parse(url),
         headers: headers,
         body: body,
       );
-
-      print('Login Response Status Code: ${response.statusCode}');
-      print('Login Response Body: ${response.body}');
 
       final data = jsonDecode(response.body);
 
@@ -70,7 +63,6 @@ class AuthService {
         throw data['message'] ?? 'Login failed';
       }
     } catch (e) {
-      print('Login Error: $e');
       throw 'Failed to connect to server';
     }
   }
