@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../screens/add_income_screen.dart';
+import '../screens/add_expense_screen.dart';
 
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key});
@@ -14,7 +16,17 @@ class QuickActions extends StatelessWidget {
           Icons.add_circle_outline,
           Colors.green,
           () {
-            // TODO: Implement add income
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddIncomeScreen()),
+            ).then((success) {
+              if (success == true) {
+                // Refresh data if needed
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Income added successfully')),
+                );
+              }
+            });
           },
         ),
         _buildQuickActionButton(
@@ -23,7 +35,17 @@ class QuickActions extends StatelessWidget {
           Icons.remove_circle_outline,
           Colors.red,
           () {
-            // TODO: Implement add expense
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddExpenseScreen()),
+            ).then((success) {
+              if (success == true) {
+                // Refresh data if needed
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Expense added successfully')),
+                );
+              }
+            });
           },
         ),
         _buildQuickActionButton(

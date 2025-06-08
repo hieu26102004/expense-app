@@ -16,11 +16,25 @@ class _AllTransactionsScreenState extends State<AllTransactionsScreen> {
   String? _error;
   int _currentPage = 1;
   bool _hasMorePages = true;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _loadTransactions();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent * 0.8) {
+      _loadMore();
+    }
   }
 
   Future<void> _loadTransactions() async {
@@ -94,20 +108,19 @@ class _AllTransactionsScreenState extends State<AllTransactionsScreen> {
         await _loadTransactions();
       },
       child: ListView.builder(
+        controller: _scrollController,
         padding: const EdgeInsets.all(16.0),
         itemCount: _transactions.length + (_hasMorePages ? 1 : 0),
         itemBuilder: (context, index) {
           if (index == _transactions.length) {
-            if (_isLoading) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-            _loadMore();
-            return const SizedBox.shrink();
+            return _hasMorePages
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : const SizedBox.shrink();
           }
 
           final transaction = _transactions[index];
@@ -124,7 +137,7 @@ class _AllTransactionsScreenState extends State<AllTransactionsScreen> {
               title: Text(transaction.description),
               subtitle: Text(transaction.category?.name ?? 'No Category'),
               trailing: Text(
-                '\$${transaction.amount}',
+                '\$${(transaction.amount / 100).toStringAsFixed(2)}',
                 style: TextStyle(
                   color: transaction.type == 'income' ? Colors.green : Colors.red,
                   fontWeight: FontWeight.bold,

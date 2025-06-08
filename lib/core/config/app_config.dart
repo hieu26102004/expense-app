@@ -11,6 +11,7 @@ class AppConfig {
   static const String registerEndpoint = '/auth/register';
   static const String loginEndpoint = '/auth/login';
   static const String transactionsEndpoint = '/transaction';
+  static const String categoriesEndpoint = '/categories';
   
   // Headers
   static const Map<String, String> defaultHeaders = {

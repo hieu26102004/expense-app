@@ -116,10 +116,10 @@ class _RecentTransactionsState extends State<RecentTransactions> {
             title: Text(transaction.description),
             subtitle: Text(transaction.category?.name ?? 'No Category'),
             trailing: Text(
-              '\$${transaction.amount}',
+              '\$${transaction.amount.toStringAsFixed(2)}',
               style: TextStyle(
-                color: transaction.type == 'income' ? Colors.green : Colors.red,
                 fontWeight: FontWeight.bold,
+                color: transaction.type == 'income' ? Colors.green : Colors.red,
               ),
             ),
           ),

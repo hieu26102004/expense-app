@@ -14,7 +14,6 @@ void main() async {
       ),
     );
   } catch (e) {
-    print('Error initializing app: $e');
     runApp(
       MaterialApp(
         home: Scaffold(

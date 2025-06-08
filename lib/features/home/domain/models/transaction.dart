@@ -1,6 +1,6 @@
 class Transaction {
   final int id;
-  final String amount;
+  final int amount;
   final String type;
   final Category? category;
   final String description;
@@ -20,15 +20,18 @@ class Transaction {
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
+    final amountStr = json['amount'].toString();
+    final amount = (double.parse(amountStr) * 100).round();
+    
     return Transaction(
-      id: json['id'],
-      amount: json['amount'],
-      type: json['type'],
+      id: json['id'] as int,
+      amount: amount,
+      type: json['type'] as String,
       category: json['category'] != null ? Category.fromJson(json['category']) : null,
-      description: json['description'],
-      date: json['date'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      description: json['description'] as String,
+      date: json['date'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
     );
   }
 }
@@ -56,14 +59,14 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      id: json['id'],
-      type: json['type'],
-      name: json['name'],
-      description: json['description'],
-      userId: json['userId'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      deletedAt: json['deletedAt'],
+      id: json['id'] as int,
+      type: json['type'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String,
+      userId: json['userId'] as String?,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+      deletedAt: json['deletedAt'] as String?,
     );
   }
 } 
